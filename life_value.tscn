@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://8o4gpyqsiiq0"]
+
+[ext_resource type="Script" path="res://Script/life_value.gd" id="1_1f8b8"]
+[ext_resource type="Texture2D" uid="uid://cvxmsrqngbrai" path="res://AssetBundle/Sprites/爱心.png" id="2_vs0f3"]
+[ext_resource type="Texture2D" uid="uid://c6063rsn3a0ji" path="res://AssetBundle/Sprites/life_副本.png" id="2_xw25j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mt0ai"]
+atlas = ExtResource("2_xw25j")
+region = Rect2(0, 0, 130, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5eiu0"]
+atlas = ExtResource("2_vs0f3")
+region = Rect2(0, 0, 139, 126)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gqxs1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mt0ai")
+}],
+"loop": true,
+"name": &"life_false",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5eiu0")
+}],
+"loop": true,
+"name": &"life_true",
+"speed": 5.0
+}]
+
+[node name="LifeValue" type="Node2D"]
+script = ExtResource("1_1f8b8")
+
+[node name="life1" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1.19209e-07, 0)
+scale = Vector2(0.153103, 0.141369)
+sprite_frames = SubResource("SpriteFrames_gqxs1")
+animation = &"life_false"

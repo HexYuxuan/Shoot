@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=3 uid="uid://cg3ond5kjrofe"]
+
+[ext_resource type="Script" path="res://Script/GameManager.gd" id="1_6lkxy"]
+[ext_resource type="Texture2D" uid="uid://vsksjki3sglu" path="res://AssetBundle/Sprites/ForestBackground.png" id="1_ii6we"]
+[ext_resource type="PackedScene" uid="uid://c8ybor5vu7t7t" path="res://Scenes/player.tscn" id="2_4bjps"]
+[ext_resource type="PackedScene" uid="uid://cw32ly8jlcjw0" path="res://Scenes/slime.tscn" id="3_p8qr6"]
+[ext_resource type="FontFile" uid="uid://cohpchrdmt2i7" path="res://AssetBundle/Uranus_Pixel_11Px.ttf" id="5_86mer"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dk4n8"]
+distance = -132.0
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("spawn_timer", "score_lable", "game_over_lable")]
+y_sort_enabled = true
+position = Vector2(1, -37)
+script = ExtResource("1_6lkxy")
+slime_scene = ExtResource("3_p8qr6")
+spawn_timer = NodePath("Timer")
+score_lable = NodePath("CanvasLayer/score")
+game_over_lable = NodePath("CanvasLayer/game_over")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 4)
+zoom = Vector2(2.4, 2.4)
+
+[node name="Boundary" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="background1" type="Sprite2D" parent="Boundary"]
+position = Vector2(-120, 0)
+texture = ExtResource("1_ii6we")
+metadata/_edit_lock_ = true
+
+[node name="background2" type="Sprite2D" parent="Boundary"]
+position = Vector2(120, -1)
+texture = ExtResource("1_ii6we")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Boundary"]
+position = Vector2(-1, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D"]
+position = Vector2(0, -1)
+shape = SubResource("WorldBoundaryShape2D_dk4n8")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Boundary"]
+position = Vector2(103, 27)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D4"]
+position = Vector2(0, -1)
+shape = SubResource("WorldBoundaryShape2D_dk4n8")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Boundary"]
+position = Vector2(-99, 19)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D3"]
+position = Vector2(0, -1)
+shape = SubResource("WorldBoundaryShape2D_dk4n8")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Boundary"]
+position = Vector2(0, 156)
+rotation = -3.14159
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D2"]
+position = Vector2(0, -1)
+shape = SubResource("WorldBoundaryShape2D_dk4n8")
+
+[node name="Player" parent="." instance=ExtResource("2_4bjps")]
+position = Vector2(-83, 64)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="score" type="Label" parent="CanvasLayer"]
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 150.0
+offset_bottom = 51.0
+theme_override_fonts/font = ExtResource("5_86mer")
+theme_override_font_sizes/font_size = 48
+text = "score:0"
+
+[node name="game_over" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -317.0
+offset_top = -60.0
+offset_right = 317.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.388235, 0.027451, 0, 1)
+theme_override_constants/outline_size = 60
+theme_override_fonts/font = ExtResource("5_86mer")
+theme_override_font_sizes/font_size = 120
+text = "GAME OVER!"
+
+[node name="my_name" type="Label" parent="CanvasLayer/game_over"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -410.0
+offset_top = 47.0
+offset_right = 413.0
+offset_bottom = 167.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.388235, 0.027451, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = ExtResource("5_86mer")
+theme_override_font_sizes/font_size = 48
+text = "made by HexLulu"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="Timer" to="." method="_create_slime"]
